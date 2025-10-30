@@ -110,7 +110,7 @@ export default function Home() {
           {/* Main Title */}
           <div className="mb-16 animate-float pointer-events-auto">
             <Image
-              src="/hero_section/game_grid.png"
+              src="/hero_section/xp_boost.png"
               alt="Game Grid"
               width={2100}
               height={400}
