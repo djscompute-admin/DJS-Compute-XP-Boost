@@ -13,12 +13,17 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 px-8 py-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
-        <a href="#home" onClick={handleNavClick('home')} className="flex items-center">
+        <a 
+          href="https://www.djscompute.in/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="flex items-center"
+        >
           <Image
             src="/djs-compute-logo.png"
             alt="Dis Compute Logo"
             width={120}
-            height={40}
+            height={50}
             className="brightness-0 invert"
             priority
             style={{ width: 'auto', height: '40px' }}
@@ -27,19 +32,21 @@ export default function Navbar() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8 text-white">
-          <a href="#home" onClick={handleNavClick('home')} className="hover:text-orange-500 transition-colors font-medium">Home</a>
-          <a href="#teams" onClick={handleNavClick('teams')} className="hover:text-orange-500 transition-colors font-medium">Teams</a>
-          <a href="#projects" onClick={handleNavClick('projects')} className="hover:text-orange-500 transition-colors font-medium">Projects</a>
-          <a href="#contact" onClick={handleNavClick('contact')} className="hover:text-orange-500 transition-colors font-medium">Contact</a>
+          <a href="#home" onClick={handleNavClick('home')} className="hover:text-orange-500 transition-colors font-medium text-lg">Home</a>
+          <a href="#teams" onClick={handleNavClick('teams')} className="hover:text-orange-500 transition-colors font-medium text-lg">Teams</a>
+          <a href="#projects" onClick={handleNavClick('projects')} className="hover:text-orange-500 transition-colors font-medium text-lg">Projects</a>
+          <a href="#prize-pool" onClick={handleNavClick('prize-pool')} className="hover:text-orange-500 transition-colors font-medium text-lg">Prize Pool</a>
+          <a href="#contact" onClick={handleNavClick('contact')} className="hover:text-orange-500 transition-colors font-medium text-lg">Contact</a>
         </div>
 
         {/* Call-to-action */}
         <a
-          href="#contact"
-          onClick={handleNavClick('contact')}
-          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg font-semibold transition-all transform hover:scale-105"
+          href="https://forms.gle/ZPR8EcxSGZSgBQWQ9"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-lg font-semibold text-lg transition-all transform hover:scale-105"
         >
-          Reservation
+          Register Now
         </a>
       </div>
     </nav>

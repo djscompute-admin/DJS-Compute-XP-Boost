@@ -5,6 +5,8 @@ import Script from "next/script";
 import { useState, useEffect, useRef } from "react";
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import PrizePool from './components/PrizePool';
+import FAQ from './components/FAQ';
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -160,6 +162,30 @@ export default function Home() {
           <p className="text-xl text-gray-400">Stay tuned for spooky showcases.</p>
         </div>
       </section>
+
+      {/* Prize Pool & FAQ Container with Shared Background */}
+      <div 
+        className="relative"
+        style={{
+          backgroundImage: "url(/witch_house_bg.png)",
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center top',
+          backgroundAttachment: 'scroll'
+        }}
+      >
+        {/* Overlay for better text visibility */}
+        <div className="absolute inset-0 bg-black/40" />
+        
+        {/* Prize Pool Section */}
+        <PrizePool />
+
+        {/* FAQ Section */}
+        <FAQ />
+      </div>
+
+      {/* Gradient Transition to Footer */}
+      <div className="h-24 bg-gradient-to-b from-transparent to-black" />
 
       {/* Footer (Contact) */}
       <Footer />
