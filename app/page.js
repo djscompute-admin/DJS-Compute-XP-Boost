@@ -1,31 +1,38 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import Script from "next/script";
 import { useState, useEffect, useRef } from "react";
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import PrizePool from './components/PrizePool';
-import FAQ from './components/FAQ';
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import PrizePool from "./components/PrizePool";
+import FAQ from "./components/FAQ";
+import AboutParty from "./components/AboutParty";
 
 export default function Home() {
   const containerRef = useRef(null);
   const [viewerReady, setViewerReady] = useState(false);
 
-  const MODEL_ID = 'e9cc6714cac542f1804d4c7f7dac5583';
+  const MODEL_ID = "e9cc6714cac542f1804d4c7f7dac5583";
 
   const initSketchfab = () => {
-    if (typeof window === 'undefined' || !containerRef.current || !window.Sketchfab) return;
+    if (
+      typeof window === "undefined" ||
+      !containerRef.current ||
+      !window.Sketchfab
+    )
+      return;
 
     // Clear any previous iframe on hot reload
-    containerRef.current.innerHTML = '';
+    containerRef.current.innerHTML = "";
 
-    const iframe = document.createElement('iframe');
-    iframe.title = 'Halloween Scene';
-    iframe.allow = 'autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope';
-    iframe.style.width = '100%';
-    iframe.style.height = '120%';
-    iframe.style.border = '0';
+    const iframe = document.createElement("iframe");
+    iframe.title = "Halloween Scene";
+    iframe.allow =
+      "autoplay; fullscreen; xr-spatial-tracking; accelerometer; gyroscope";
+    iframe.style.width = "100%";
+    iframe.style.height = "120%";
+    iframe.style.border = "0";
     containerRef.current.appendChild(iframe);
 
     const client = new window.Sketchfab(iframe);
@@ -46,20 +53,20 @@ export default function Home() {
       ui_annotations: 0,
       ui_controls: 1,
       success: (api) => {
-        api.addEventListener('viewerready', () => {
+        api.addEventListener("viewerready", () => {
           setViewerReady(true);
         });
       },
       error: () => {
         // Fail-safe to hide loader if viewer doesn't fire ready
         setTimeout(() => setViewerReady(true), 4000);
-      }
+      },
     });
   };
 
   // If the script was already loaded (hot reload), initialize
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.Sketchfab) {
+    if (typeof window !== "undefined" && window.Sketchfab) {
       initSketchfab();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,35 +74,46 @@ export default function Home() {
   const scrollToContent = () => {
     window.scrollTo({
       top: window.innerHeight,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
-      
-  {/* Hero Section */}
-  <section id="home" className="relative h-screen w-full overflow-hidden bg-black select-none">
+
+      {/* Hero Section */}
+      <section
+        id="home"
+        className="relative h-screen w-full overflow-hidden bg-black select-none"
+      >
         {/* Sketchfab 3D Background Scene via Viewer API */}
         <div className="absolute inset-0 z-10 overflow-hidden bg-black select-none">
-          <div ref={containerRef} className="w-full h-full relative select-none" style={{ transform: 'scale(1.15) translateY(-8%)' }} />
+          <div
+            ref={containerRef}
+            className="w-full h-full relative select-none"
+            style={{ transform: "scale(1.15) translateY(-8%)" }}
+          />
           {/* Loading GIF overlay */}
-          <div className={`absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-300 pointer-events-none select-none ${viewerReady ? 'opacity-0' : 'opacity-100'}`}>
-            <Image 
-              src="/hero_section/loading.gif" 
-              alt="Loading 3D Model" 
-              width={160} 
-              height={160} 
-              priority 
-              style={{ width: 'auto', height: 'auto' }}
+          <div
+            className={`absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-300 pointer-events-none select-none ${
+              viewerReady ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            <Image
+              src="/hero_section/loading.gif"
+              alt="Loading 3D Model"
+              width={160}
+              height={160}
+              priority
+              style={{ width: "auto", height: "auto" }}
             />
           </div>
           {/* Gradient overlays to hide watermarks - do not block interaction */}
           <div className="absolute bottom-0 left-0 right-0 h-24 bg-linear-to-t from-black via-black/90 to-transparent pointer-events-none z-10"></div>
           <div className="absolute top-0 left-0 right-0 h-16 bg-linear-to-b from-black/60 to-transparent pointer-events-none z-10"></div>
         </div>
-        
+
         {/* Content Overlay */}
         <div className="relative z-30 flex flex-col items-center justify-center h-full px-4 pointer-events-none">
           {/* Top Text */}
@@ -123,7 +141,7 @@ export default function Home() {
           </div>
 
           {/* Scroll Down Arrow */}
-          <button 
+          <button
             onClick={scrollToContent}
             className="animate-bounce cursor-pointer hover:scale-110 transition-transform pointer-events-auto"
             aria-label="Scroll down"
@@ -134,7 +152,7 @@ export default function Home() {
               width={60}
               height={60}
               className="opacity-80 hover:opacity-100 transition-opacity pointer-events-none"
-              style={{ width: 'auto', height: 'auto' }}
+              style={{ width: "auto", height: "auto" }}
             />
           </button>
         </div>
@@ -148,35 +166,37 @@ export default function Home() {
       />
 
       {/* Leaderboard Section */}
-      <section id="leaderboard" className="min-h-screen bg-black text-white flex items-center justify-center">
+      <section
+        id="leaderboard"
+        className="min-h-screen bg-black text-white flex items-center justify-center"
+      >
         <div className="text-center px-4">
-          <h2 className="jolly-lodger-regular text-5xl sm:text-6xl md:text-7xl mb-6 text-orange-500">Leaderboard</h2>
-          <p className="text-xl sm:text-2xl text-gray-400">The champions will be revealed here soon...</p>
+          <h2 className="jolly-lodger-regular text-5xl sm:text-6xl md:text-7xl mb-6 text-orange-500">
+            Leaderboard
+          </h2>
+          <p className="text-xl sm:text-2xl text-gray-400">
+            The champions will be revealed here soon...
+          </p>
         </div>
       </section>
 
-      {/* About Party Section */}
-      <section id="about-party" className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center px-4">
-          <h2 className="jolly-lodger-regular text-5xl sm:text-6xl md:text-7xl mb-6 text-orange-500">About Party</h2>
-          <p className="text-xl sm:text-2xl text-gray-400">Join us for a spooktacular celebration!</p>
-        </div>
-      </section>
-
-      {/* Prize Pool & FAQ Container with Shared Background */}
-      <div 
+      {/* About Party, Prize Pool & FAQ Container with Shared Background */}
+      <div
         className="relative"
         style={{
           backgroundImage: "url(/witch_house_bg.png)",
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center top',
-          backgroundAttachment: 'scroll'
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center top",
+          backgroundAttachment: "scroll",
         }}
       >
         {/* Overlay for better text visibility */}
-        <div className="absolute inset-0 bg-black/40" />
-        
+        <div className="absolute inset-0 bg-black/1" />
+
+        {/* About Party Section */}
+        <AboutParty />
+
         {/* Prize Pool Section */}
         <PrizePool />
 
