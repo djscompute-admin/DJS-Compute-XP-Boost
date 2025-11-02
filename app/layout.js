@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Game Grid - Halloween Party O'Clock",
-  description: "Join us for the ultimate Halloween party event - Game Grid",
+  title: "XP Boost - Halloween Party O'Clock",
+  description: "Join us for the ultimate Halloween party event - XP Boost",
 };
 
 export default function RootLayout({ children }) {
