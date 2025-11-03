@@ -73,6 +73,77 @@ export default function Home() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Disable double-click and two-finger pinch (pinch-zoom) on the hero section only.
+  useEffect(() => {
+    const home = document.getElementById('home');
+    if (!home) return;
+
+    let pinching = false;
+
+    const onDblClick = (e) => {
+      // Prevent default double-click behavior (zoom/select) but allow other clicks
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    let initialDistance = null;
+
+    const getDistance = (t1, t2) => {
+      const dx = t2.clientX - t1.clientX;
+      const dy = t2.clientY - t1.clientY;
+      return Math.hypot(dx, dy);
+    };
+
+    const onTouchStart = (e) => {
+      if (e.touches && e.touches.length === 2) {
+        pinching = true;
+        initialDistance = getDistance(e.touches[0], e.touches[1]);
+      }
+    };
+
+    const onTouchMove = (e) => {
+      // Only intercept two-finger gestures (pinch)
+      if (pinching && e.touches && e.touches.length === 2) {
+        const dist = getDistance(e.touches[0], e.touches[1]);
+        // If distance changed significantly, treat as pinch and prevent zoom
+        if (initialDistance && Math.abs(dist - initialDistance) > 2) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }
+    };
+
+    const onTouchEnd = (e) => {
+      if (!e.touches || e.touches.length < 2) {
+        pinching = false;
+        initialDistance = null;
+      }
+    };
+
+    // Some browsers support gesture events (Safari)
+    const onGesture = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    home.addEventListener('dblclick', onDblClick, { passive: false, capture: true });
+    home.addEventListener('touchstart', onTouchStart, { passive: true, capture: true });
+    // touchmove must be non-passive to call preventDefault
+    home.addEventListener('touchmove', onTouchMove, { passive: false, capture: true });
+    home.addEventListener('touchend', onTouchEnd, { passive: true, capture: true });
+    home.addEventListener('gesturestart', onGesture, { passive: false, capture: true });
+    home.addEventListener('gesturechange', onGesture, { passive: false, capture: true });
+
+    return () => {
+      home.removeEventListener('dblclick', onDblClick, { capture: true });
+      home.removeEventListener('touchstart', onTouchStart, { capture: true });
+      home.removeEventListener('touchmove', onTouchMove, { capture: true });
+      home.removeEventListener('touchend', onTouchEnd, { capture: true });
+      home.removeEventListener('gesturestart', onGesture, { capture: true });
+      home.removeEventListener('gesturechange', onGesture, { capture: true });
+    };
+  }, []);
   const scrollToContent = () => {
     window.scrollTo({
       top: window.innerHeight,
@@ -145,9 +216,10 @@ export default function Home() {
           {/* Scroll Down Arrow */}
           <button
             onClick={scrollToContent}
-            className="animate-bounce cursor-pointer hover:scale-110 transition-transform pointer-events-auto"
+            className="animate-bounce cursor-pointer hover:scale-110 transition-transform pointer-events-auto text-3xl text-orange-500 flex flex-col items-center mt-8 select-none jolly-lodger-regular gap-2"
             aria-label="Scroll down"
           >
+            Click to Scroll
             <Image
               src="/hero_section/arrow.png"
               alt="Scroll down"
