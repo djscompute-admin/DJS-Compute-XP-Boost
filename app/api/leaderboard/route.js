@@ -5,17 +5,17 @@ import { NextResponse } from 'next/server';
 // Fallback published CSV URL
 const PUBLISHED_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRtbDJdM5IaEo1nqatV9VmHjOCkfUGZP3plWHbi8iHR0703pm_pg3Z2lmxuqyL3SebvRTqW6del9ar1/pub?gid=0&single=true&output=csv';
 
-// Configure authentication
+// Configure authentication using environment variables
 const auth = new JWT({
-  email: 'djs-compute-service-account@aesthetic-petal-477109-r3.iam.gserviceaccount.com',
-  keyFile: './app/config/serviceAccount.json',
+  email: process.env.GOOGLE_CLIENT_EMAIL,
+  key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'), // Fix newline characters
   scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
 });
 
 const sheets = google.sheets({ version: 'v4', auth });
 
-// Spreadsheet configuration
-const SPREADSHEET_ID = '1uKfOgHUhsqhcakvbDLoTshDuZok5vkbokxqzXXHMK4g';
+// Spreadsheet configuration from environment variables
+const SPREADSHEET_ID = process.env.GOOGLE_SPREADSHEET_ID;
 const RANGE = 'Sheet1!A2:C'; // Assuming data starts from A2 with 3 columns
 
 // Helper function to parse CSV data
@@ -33,30 +33,32 @@ const parseCSV = (csv) => {
 
 export async function GET() {
   try {
-    // Try using Google Sheets API first
-    try {
-      console.log('Fetching data from Google Sheets API...');
-      const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: SPREADSHEET_ID,
-        range: RANGE,
-      });
+    // Try using Google Sheets API first if credentials are available
+    if (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY && process.env.GOOGLE_SPREADSHEET_ID) {
+      try {
+        console.log('Fetching data from Google Sheets API...');
+        const response = await sheets.spreadsheets.values.get({
+          spreadsheetId: SPREADSHEET_ID,
+          range: RANGE,
+        });
 
-      const rows = response.data.values || [];
-      const teams = rows.map(([teamId, teamName, totalXP]) => ({
-        teamId: teamId ? teamId.trim() : 'N/A',
-        teamName: teamName ? teamName.trim() : 'Unknown Team',
-        totalXP: parseInt(totalXP, 10) || 0,
-      }));
+        const rows = response.data.values || [];
+        const teams = rows.map(([teamId, teamName, totalXP]) => ({
+          teamId: teamId ? teamId.trim() : 'N/A',
+          teamName: teamName ? teamName.trim() : 'Unknown Team',
+          totalXP: parseInt(totalXP, 10) || 0,
+        }));
 
-      return NextResponse.json(teams, {
-        status: 200,
-        headers: {
-          'Cache-Control': 'no-cache, no-store, must-revalidate',
-        },
-      });
-    } catch (error) {
-      console.error('Google Sheets API error:', error);
-      // Fall through to CSV fallback
+        return NextResponse.json(teams, {
+          status: 200,
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+          },
+        });
+      } catch (error) {
+        console.error('Google Sheets API error:', error);
+        // Fall through to CSV fallback
+      }
     }
 
     // Fallback to published CSV if API fails
