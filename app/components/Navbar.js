@@ -72,11 +72,11 @@ export default function Navbar() {
 
         {/* Navigation Links */}
         <div className="hidden md:flex items-center gap-8 text-white">
-          <a href="#home" onClick={handleNavClick('home')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 hover:underline transition-all">Home</a>
-          <a href="#leaderboard" onClick={handleNavClick('leaderboard')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 hover:underline transition-all">Leaderboard</a>
-          <a href="#about-party" onClick={handleNavClick('about-party')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 hover:underline transition-all">About Party</a>
-          <a href="#prize-pool" onClick={handleNavClick('prize-pool')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 hover:underline transition-all">Prize Pool</a>
-          <a href="#contact" onClick={handleNavClick('contact')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 hover:underline transition-all">Contact</a>
+          <a href="#home" onClick={handleNavClick('home')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 transition-all">Home</a>
+          <a href="#leaderboard" onClick={handleNavClick('leaderboard')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 transition-all">Leaderboard</a>
+          <a href="#about-party" onClick={handleNavClick('about-party')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 transition-all">About Party</a>
+          <a href="#prize-pool" onClick={handleNavClick('prize-pool')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 transition-all">Prize Pool</a>
+          <a href="#contact" onClick={handleNavClick('contact')} className="font-semibold text-lg uppercase tracking-wide hover:text-orange-500 transition-all">Contact</a>
         </div>
 
         {/* Call-to-action */}

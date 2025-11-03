@@ -240,21 +240,17 @@ export default function Home() {
       />
 
       {/* Leaderboard Section */}
-     
 
-    <div>
-      <Head>
-        <title>Spooky Leaderboard</title>
-        <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
-        {/* You might want to prefetch images for the background here */}
-      </Head>
-
-      <main>
-        {/* Other sections of your webpage can go here */}
-        <Leaderboard />
-        {/* More sections */}
-      </main>
-    </div>
+      {/* Leaderboard Section (wrapped with id for navbar scrolling) */}
+      <section id="leaderboard" className="min-h-screen bg-black text-white flex items-center justify-center overflow-visible">
+        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
+          <Head>
+            <title>Spooky Leaderboard</title>
+            <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet" />
+          </Head>
+          <Leaderboard />
+        </div>
+      </section>
 
 
       {/* About Party, Prize Pool & FAQ Container with Shared Background */}

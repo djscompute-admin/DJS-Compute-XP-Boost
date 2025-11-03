@@ -2,18 +2,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Add padding-top to create space for background title */
-  padding: 150px 20px 40px; /* Top, Right/Left, Bottom */
+  /* Add padding-top to create space for background title; use larger horizontal padding so podiums don't touch edges */
+  padding: 150px 6rem 40px; /* Top, Right/Left, Bottom */
   min-height: 100vh;
   color: #fff;
   font-family: 'Creepster', cursive;
   position: relative;
-  overflow: hidden;
+  /* Allow podium boxes and shadows to render outside the section bounds */
+  overflow: visible;
+  /* Make this section full-bleed so its decorations won't be clipped by parent containers */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   background-color: #0d0d1a;
   background-image: url('/leaderboard/leaderboard_bg.png'); /* Updated background URL */
   background-size: cover;
   background-position: center top; /* Center horizontally, align to top vertically */
-  background-repeat: no-repeat;
   background-repeat: no-repeat;
 }
 
@@ -31,6 +35,9 @@
   width: 100%;
   max-width: 1800px;
   z-index: 1;
+  /* Allow items to overflow horizontally if needed and add inner padding */
+  overflow: visible;
+  padding-inline: 2rem;
 }
 
 .podiumWrapper {
@@ -99,6 +106,28 @@
 .thirdPlace {
   height: 200px; /* Increased height for 3rd place box */
   width:220px;
+}
+
+/* Responsive tweaks to prevent clipping on smaller viewports */
+@media (max-width: 1024px) {
+  .leaderboardSection {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .top3 {
+    gap: 18px;
+  }
+  .firstPlace { width: 260px; height: 260px; }
+  .secondPlace { width: 220px; height: 220px; }
+  .thirdPlace { width: 180px; height: 180px; }
+}
+
+@media (max-width: 640px) {
+  .top3 { gap: 12px; }
+  .firstPlace { width: 220px; height: 220px; transform: translateY(-10px); }
+  .secondPlace { width: 180px; height: 180px; }
+  .thirdPlace { width: 150px; height: 150px; }
+  .leaderboardSection { padding: 120px 1rem 32px; }
 }
 
 .placeNumber { /* The 1st, 2nd, 3rd text inside the box */
