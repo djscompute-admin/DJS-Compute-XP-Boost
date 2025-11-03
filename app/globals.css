@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -29,6 +30,12 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+
+.nosifer-regular {
+  font-family: "Nosifer", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .jolly-lodger-regular {
@@ -352,6 +359,16 @@ html {
   font-family: "Jolly Lodger", system-ui;
   color: gold;
   font-size: clamp(3rem, 8vw, 6rem);
+  text-align: center;
+  letter-spacing: 0.1em;
+  filter: drop-shadow(0 0 20px gold);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.lights-out-fullscreen .game-content h1 {
+  font-family: "Jolly Lodger", system-ui;
+  color: gold;
+  font-size: clamp(2.5rem, 6vw, 4rem);
   text-align: center;
   letter-spacing: 0.1em;
   filter: drop-shadow(0 0 20px gold);
