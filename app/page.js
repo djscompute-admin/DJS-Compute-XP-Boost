@@ -10,8 +10,6 @@ import FAQ from "./components/FAQ";
 import AboutParty from "./components/AboutParty";
 import Leaderboard from './components/Leaderboard';
 import Head from 'next/head';
-import Leaderboard from './components/Leaderboard';
-import Head from 'next/head';
 
 export default function Home() {
   const containerRef = useRef(null);
